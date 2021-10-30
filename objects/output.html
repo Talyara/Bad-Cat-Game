@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+<style>
+.hll { background-color: #ffffcc }
+.c { color: #008800; font-style: italic } /* Comment */
+.err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.k { color: #000080; font-weight: bold } /* Keyword */
+.ch { color: #008800; font-style: italic } /* Comment.Hashbang */
+.cm { color: #008800; font-style: italic } /* Comment.Multiline */
+.cp { color: #008080 } /* Comment.Preproc */
+.cpf { color: #008800; font-style: italic } /* Comment.PreprocFile */
+.c1 { color: #008800; font-style: italic } /* Comment.Single */
+.cs { color: #008800; font-weight: bold } /* Comment.Special */
+.gd { color: #000000; background-color: #ffdddd } /* Generic.Deleted */
+.ge { font-style: italic } /* Generic.Emph */
+.gr { color: #aa0000 } /* Generic.Error */
+.gh { color: #999999 } /* Generic.Heading */
+.gi { color: #000000; background-color: #ddffdd } /* Generic.Inserted */
+.go { color: #888888 } /* Generic.Output */
+.gp { color: #555555 } /* Generic.Prompt */
+.gs { font-weight: bold } /* Generic.Strong */
+.gu { color: #aaaaaa } /* Generic.Subheading */
+.gt { color: #aa0000 } /* Generic.Traceback */
+.kc { color: #000080; font-weight: bold } /* Keyword.Constant */
+.kd { color: #000080; font-weight: bold } /* Keyword.Declaration */
+.kn { color: #000080; font-weight: bold } /* Keyword.Namespace */
+.kp { color: #000080; font-weight: bold } /* Keyword.Pseudo */
+.kr { color: #000080; font-weight: bold } /* Keyword.Reserved */
+.kt { color: #000080; font-weight: bold } /* Keyword.Type */
+.m { color: #0000FF } /* Literal.Number */
+.s { color: #0000FF } /* Literal.String */
+.na { color: #FF0000 } /* Name.Attribute */
+.nt { color: #000080; font-weight: bold } /* Name.Tag */
+.ow { font-weight: bold } /* Operator.Word */
+.w { color: #bbbbbb } /* Text.Whitespace */
+.mb { color: #0000FF } /* Literal.Number.Bin */
+.mf { color: #0000FF } /* Literal.Number.Float */
+.mh { color: #0000FF } /* Literal.Number.Hex */
+.mi { color: #0000FF } /* Literal.Number.Integer */
+.mo { color: #0000FF } /* Literal.Number.Oct */
+.sa { color: #0000FF } /* Literal.String.Affix */
+.sb { color: #0000FF } /* Literal.String.Backtick */
+.sc { color: #800080 } /* Literal.String.Char */
+.dl { color: #0000FF } /* Literal.String.Delimiter */
+.sd { color: #0000FF } /* Literal.String.Doc */
+.s2 { color: #0000FF } /* Literal.String.Double */
+.se { color: #0000FF } /* Literal.String.Escape */
+.sh { color: #0000FF } /* Literal.String.Heredoc */
+.si { color: #0000FF } /* Literal.String.Interpol */
+.sx { color: #0000FF } /* Literal.String.Other */
+.sr { color: #0000FF } /* Literal.String.Regex */
+.s1 { color: #0000FF } /* Literal.String.Single */
+.ss { color: #0000FF } /* Literal.String.Symbol */
+.il { color: #0000FF } /* Literal.Number.Integer.Long */
+</style>
+<style>
+	h2 {
+		font-family: monospace;
+		font-weight: normal;
+		background-color: #DDD;
+		padding: 5px;
+	}
+</style>
+</head>
+<body>
+<h2>./oCamera/Create_0.gml</h2>
+<div class="highlight"><pre><span></span><span class="c1">/// @description Set up camera</span>
+<span class="nx">cam</span> <span class="o">=</span> <span class="nx">view_camera</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="nx">follow</span> <span class="o">=</span> <span class="nx">oPlayer</span><span class="p">.</span><span class="nx">id</span><span class="p">;</span>
+<span class="nx">view_w_half</span> <span class="o">=</span> <span class="nx">camera_get_view_width</span><span class="p">(</span><span class="nx">cam</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">;</span>
+<span class="nx">view_h_half</span> <span class="o">=</span> <span class="nx">camera_get_view_height</span><span class="p">(</span><span class="nx">cam</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">;</span>
+<span class="nx">xTo</span> <span class="o">=</span> <span class="nx">xstart</span><span class="p">;</span>
+<span class="nx">yTo</span> <span class="o">=</span> <span class="nx">ystart</span><span class="p">;</span>
+</pre></div>
+<h2>./oCamera/KeyPress_82.gml</h2>
+<div class="highlight"><pre><span></span><span class="nx">game_restart</span><span class="p">();</span>
+</pre></div>
+<h2>./oCamera/Step_0.gml</h2>
+<div class="highlight"><pre><span></span><span class="c1">/// @description Update camera</span>
+
+<span class="c1">//Update destination</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">instance_exists</span><span class="p">(</span><span class="nx">follow</span><span class="p">))</span> <span class="p">{</span>
+	<span class="nx">xTo</span> <span class="o">=</span> <span class="nx">follow</span><span class="p">.</span><span class="nx">x</span><span class="p">;</span>
+	<span class="nx">yTo</span> <span class="o">=</span> <span class="nx">follow</span><span class="p">.</span><span class="nx">y</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">//Update object position</span>
+<span class="nx">x</span> <span class="o">+=</span> <span class="p">(</span><span class="nx">xTo</span> <span class="o">-</span> <span class="nx">x</span><span class="p">)</span> <span class="o">/</span> <span class="mi">25</span><span class="p">;</span>
+<span class="nx">y</span> <span class="o">+=</span> <span class="p">(</span><span class="nx">yTo</span> <span class="o">-</span> <span class="nx">y</span><span class="p">)</span> <span class="o">/</span> <span class="mi">25</span><span class="p">;</span>
+
+<span class="nx">x</span> <span class="o">=</span> <span class="nx">clamp</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">view_w_half</span><span class="p">,</span><span class="nx">room_width</span><span class="o">-</span><span class="nx">view_w_half</span><span class="p">);</span>
+<span class="nx">y</span> <span class="o">=</span> <span class="nx">clamp</span><span class="p">(</span><span class="nx">y</span><span class="p">,</span><span class="nx">view_h_half</span><span class="p">,</span><span class="nx">room_width</span><span class="o">-</span><span class="nx">view_h_half</span><span class="p">);</span>
+
+<span class="c1">//Update camera view</span>
+<span class="nx">camera_set_view_pos</span><span class="p">(</span><span class="nx">cam</span><span class="p">,</span><span class="nx">x</span> <span class="o">-</span> <span class="nx">view_w_half</span><span class="p">,</span><span class="nx">y</span> <span class="o">-</span> <span class="nx">view_h_half</span><span class="p">);</span>
+</pre></div>
+<h2>./oEnemy/Create_0.gml</h2>
+<div class="highlight"><pre><span></span><span class="nx">vsp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>  <span class="c1">// navpična hitrost</span>
+<span class="nx">grv</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span>  <span class="c1">// gravitacija</span>
+<span class="nx">walksp</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>  <span class="c1">// hitrost teka</span>
+<span class="nx">hsp</span> <span class="o">=</span> <span class="nx">walksp</span><span class="p">;</span>  <span class="c1">// vodoravna hitrost</span>
+
+<span class="nx">hp</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>  <span class="c1">// število življenj</span>
+<span class="nx">hitfrom</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>  <span class="c1">// smer zadetka</span>
+
+<span class="nx">flash</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</pre></div>
+<h2>./oEnemy/Draw_0.gml</h2>
+<div class="highlight"><pre><span></span><span class="nx">draw_self</span><span class="p">();</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nx">flash</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">flash</span><span class="o">--</span><span class="p">;</span>
+	<span class="nx">shader_set</span><span class="p">(</span><span class="nx">shWhite</span><span class="p">);</span>
+	<span class="nx">draw_self</span><span class="p">();</span>
+	<span class="nx">shader_reset</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+<h2>./oEnemy/Step_0.gml</h2>
+<div class="highlight"><pre><span></span><span class="c1">//Calculate Movement</span>
+<span class="nx">vsp</span> <span class="o">+=</span> <span class="nx">grv</span><span class="p">;</span>
+
+<span class="c1">/// VODORAVNI TRK: SE OBRNE</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">place_meeting</span><span class="p">(</span><span class="nx">x</span><span class="o">+</span><span class="nx">hsp</span><span class="p">,</span><span class="nx">y</span><span class="p">,</span><span class="nx">oWall</span><span class="p">))</span> <span class="p">{</span>  <span class="c1">// if (čez 1 tik bo v zidu)</span>
+	<span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="nx">place_meeting</span><span class="p">(</span><span class="nx">x</span><span class="o">+</span><span class="nx">sign</span><span class="p">(</span><span class="nx">hsp</span><span class="p">),</span><span class="nx">y</span><span class="p">,</span><span class="nx">oWall</span><span class="p">))</span> <span class="p">{</span>  <span class="c1">// dokler je vsaj 1px od zida v smeri gibanja po x osi</span>
+		<span class="nx">x</span> <span class="o">+=</span> <span class="nx">sign</span><span class="p">(</span><span class="nx">hsp</span><span class="p">);</span>  <span class="c1">// se premika 1px v smeri gibanja po x osi</span>
+	<span class="p">}</span>
+	<span class="nx">hsp</span> <span class="o">=</span> <span class="o">-</span><span class="nx">hsp</span><span class="p">;</span>  <span class="c1">// se obrne (po x osi)</span>
+<span class="p">}</span>
+
+<span class="c1">/// ROB PLATFORME: SE OBRNE</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">place_meeting</span><span class="p">(</span><span class="nx">x</span><span class="o">+</span><span class="nx">hsp</span><span class="o">+</span><span class="nx">sign</span><span class="p">(</span><span class="nx">hsp</span><span class="p">)</span><span class="o">*</span><span class="mi">60</span><span class="p">,</span><span class="nx">y</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="nx">oWall</span><span class="p">))</span> <span class="p">{</span>  <span class="c1">// if (čez 1 tik ne bo več nad zidom)</span>
+	<span class="nx">hsp</span> <span class="o">=</span> <span class="o">-</span><span class="nx">hsp</span><span class="p">;</span>  <span class="c1">// se obrne (po x osi)</span>
+	<span class="p">}</span>
+
+<span class="nx">x</span> <span class="o">+=</span> <span class="nx">hsp</span><span class="p">;</span>
+
+<span class="c1">//Vertical Collision</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">place_meeting</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="o">+</span><span class="nx">vsp</span><span class="p">,</span><span class="nx">oWall</span><span class="p">))</span> <span class="p">{</span>
+	<span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="nx">place_meeting</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="o">+</span><span class="nx">sign</span><span class="p">(</span><span class="nx">vsp</span><span class="p">),</span><span class="nx">oWall</span><span class="p">))</span> <span class="p">{</span>
+		<span class="nx">y</span> <span class="o">+=</span> <span class="nx">sign</span><span class="p">(</span><span class="nx">vsp</span><span class="p">);</span>
+	<span class="p">}</span>
+	<span class="nx">vsp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">y</span> <span class="o">+=</span> <span class="nx">vsp</span><span class="p">;</span>
+
+
+<span class="c1">//Animation</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">place_meeting</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="nx">oWall</span><span class="p">))</span> <span class="p">{</span>  <span class="c1">// (if not on ground)</span>
+	<span class="nx">sprite_index</span> <span class="o">=</span> <span class="nx">sEnemyA</span><span class="p">;</span>
+	<span class="nx">image_speed</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="c1">// Up or down image</span>
+	<span class="k">if</span> <span class="p">(</span><span class="nx">sign</span><span class="p">(</span><span class="nx">vsp</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="nx">image_index</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="k">else</span> <span class="nx">image_index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">else</span> <span class="p">{</span>  <span class="c1">// is on ground</span>
+	<span class="nx">image_speed</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+	<span class="k">if</span> <span class="p">(</span><span class="nx">hsp</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">sprite_index</span> <span class="o">=</span> <span class="nx">sEnemy</span><span class="p">;</span>
+	<span class="p">}</span>
+	<span class="k">else</span> <span class="p">{</span>
+		<span class="nx">sprite_index</span> <span class="o">=</span> <span class="nx">sEnemyR</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>	
+<span class="k">if</span> <span class="p">(</span><span class="nx">hsp</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="nx">image_xscale</span> <span class="o">=</span> <span class="nx">sign</span><span class="p">(</span><span class="nx">hsp</span><span class="p">);</span>
+</pre></div>
+<h2>./oEnemy/Step_2.gml</h2>
+<div class="highlight"><pre><span></span><span class="c1">/// SMRT</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">hp</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// if (nasprotnik več nima življenj)</span>
+	<span class="kd">with</span> <span class="p">(</span><span class="nx">instance_create_layer</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">,</span><span class="nx">layer</span><span class="p">,</span><span class="nx">oEnemyCorpse</span><span class="p">))</span> <span class="p">{</span>  <span class="c1">// ustvari truplo na isti poziciji</span>
+		<span class="nx">direction</span> <span class="o">=</span> <span class="nx">other</span><span class="p">.</span><span class="nx">hitfrom</span><span class="p">;</span>
+		<span class="nx">hsp</span> <span class="o">=</span> <span class="nx">lengthdir_x</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="nx">direction</span><span class="p">);</span>
+		<span class="nx">vsp</span> <span class="o">=</span> <span class="nx">lengthdir_x</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="nx">direction</span><span class="p">)</span> <span class="o">-</span> <span class="mi">3</span><span class="p">;</span>
+		<span class="nx">image_xscale</span> <span class="o">=</span> <span class="nx">sign</span><span class="p">(</span><span class="nx">hsp</span><span class="p">);</span>  <span class="c1">// obrne truplo v isto smer kot oEnemy</span>
+	<span class="p">}</span>
+	<span class="nx">instance_destroy</span><span class="p">();</span>  <span class="c1">// uniči ta primer oEnemy</span>
+<span class="p">}</span>	
+</pre></div>
+<h2>./oEnemyCorpse/Create_0.gml</h2>
+<div class="highlight"><pre><span></span><span class="nx">image_speed</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>  <span class="c1">// ne animira</span>
+<span class="nx">global</span><span class="p">.</span><span class="nx">kills</span><span class="o">++</span><span class="p">;</span>
+
+<span class="nx">hsp</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="nx">vsp</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span><span class="p">;</span>
+<span class="nx">grv</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span>
+<span class="nx">done</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</pre></div>
+<h2>./oEnemyCorpse/Step_0.gml</h2>
+<div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nx">done</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+<span class="c1">//Calculate Movement</span>
+	<span class="nx">vsp</span> <span class="o">+=</span> <span class="nx">grv</span><span class="p">;</span>
+
+	<span class="c1">//Horizontal Collision</span>
+	<span class="k">if</span> <span class="p">(</span><span class="nx">place_meeting</span><span class="p">(</span><span class="nx">x</span><span class="o">+</span><span class="nx">hsp</span><span class="p">,</span><span class="nx">y</span><span class="p">,</span><span class="nx">oWall</span><span class="p">))</span> <span class="p">{</span>
+		<span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="nx">place_meeting</span><span class="p">(</span><span class="nx">x</span><span class="o">+</span><span class="nx">sign</span><span class="p">(</span><span class="nx">hsp</span><span class="p">),</span><span class="nx">y</span><span class="p">,</span><span class="nx">oWall</span><span class="p">))</span> <span class="p">{</span>
+			<span class="nx">x</span> <span class="o">+=</span> <span class="nx">sign</span><span class="p">(</span><span class="nx">hsp</span><span class="p">);</span>
+		<span class="p">}</span>
+		<span class="nx">hsp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="nx">x</span> <span class="o">+=</span> <span class="nx">hsp</span><span class="p">;</span>
+
+	<span class="c1">//Vertical Collision</span>
+	<span class="k">if</span> <span class="p">(</span><span class="nx">place_meeting</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="o">+</span><span class="nx">vsp</span><span class="p">,</span><span class="nx">oWall</span><span class="p">))</span> <span class="p">{</span>
+		<span class="k">if</span> <span class="p">(</span><span class="nx">vsp</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+			<span class="nx">done</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+			<span class="nx">image_index</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+		<span class="p">}</span>
+		<span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="nx">place_meeting</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="o">+</span><span class="nx">sign</span><span class="p">(</span><span class="nx">vsp</span><span class="p">),</span><span class="nx">oWall</span><span class="p">))</span> <span class="p">{</span>
+			<span class="nx">y</span> <span class="o">+=</span> <span class="nx">sign</span><span class="p">(</span><span class="nx">vsp</span><span class="p">);</span>
+		<span class="p">}</span>
+		<span class="nx">vsp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="nx">y</span> <span class="o">+=</span> <span class="nx">vsp</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<h2>./oEye/Step_0.gml</h2>
+<div class="highlight"><pre><span></span><span class="c1">/// @description Insert description here</span>
+<span class="c1">// You can write your code in this editor</span>
+</pre></div>
+<h2>./oEyeLeft/Create_0.gml</h2>
+<div class="highlight"><pre><span></span><span class="nx">firingdelay</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>  <span class="c1">// zakasnitev do strela</span>
+</pre></div>
+<h2>./oEyeLeft/Draw_0.gml</h2>
+<div class="highlight"><pre><span></span><span class="nx">draw_self</span><span class="p">();</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nx">oPlayer</span><span class="p">.</span><span class="nx">pflash</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">shader_set</span><span class="p">(</span><span class="nx">shWhite</span><span class="p">);</span>
+	<span class="nx">draw_self</span><span class="p">();</span>
+	<span class="nx">shader_reset</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+<h2>./oEyeLeft/Step_0.gml</h2>
+<div class="highlight"><pre><span></span><span class="c1">/// IZSTRELI LASER VSAKIH 13 TIKOV</span>
+<span class="nx">firingdelay</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>  <span class="c1">// zmanjša zakasnitev za 1</span>
+<span class="k">if</span>	<span class="p">(</span><span class="nx">mouse_check_button</span><span class="p">(</span><span class="nx">mb_left</span><span class="p">))</span>  <span class="c1">// if (pritisnjen levi gumb na miški)</span>
+  <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">firingdelay</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">//	&amp;&amp; zakasnitev je manj kot 0</span>
+	<span class="nx">firingdelay</span> <span class="o">=</span> <span class="mi">13</span><span class="p">;</span>  <span class="c1">// nastavi zakasnitev na 13</span>
+	<span class="kd">with</span> <span class="p">(</span><span class="nx">instance_create_layer</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">,</span><span class="s2">&quot;Lasers&quot;</span><span class="p">,</span><span class="nx">oLaser</span><span class="p">))</span> <span class="p">{</span>  <span class="c1">// ustvari laser</span>
+		<span class="nx">speed</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>  <span class="c1">// hitrost laserja	</span>
+		<span class="nx">direction</span> <span class="o">=</span> <span class="nx">other</span><span class="p">.</span><span class="nx">image_angle</span> <span class="o">+</span> <span class="nx">random_range</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>  <span class="c1">// smer laserja je enaka smeri slike očesa</span>
+		<span class="nx">image_angle</span> <span class="o">=</span> <span class="nx">direction</span><span class="p">;</span>  <span class="c1">// smer slike laserja je enaka smeri slike očesa</span>
+	<span class="p">}</span>
+<span class="p">}</span>	
+
+<span class="c1">//Makes sure Eyes don&#39;t turn upside-down</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">image_angle</span> <span class="o">&gt;</span> <span class="mi">90</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">image_angle</span> <span class="o">&lt;</span> <span class="mi">270</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">image_yscale</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">else</span> <span class="p">{</span>
+	<span class="nx">image_yscale</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>	
+</pre></div>
+<h2>./oEyeLeft/Step_2.gml</h2>
+<div class="highlight"><pre><span></span><span class="c1">// Pozicija glede na oPlayer</span>
+<span class="nx">x</span> <span class="o">=</span> <span class="nx">oPlayer</span><span class="p">.</span><span class="nx">x</span> <span class="o">-</span> <span class="mi">21</span><span class="p">;</span>  <span class="c1">// 21px levo od oPlayer</span>
+<span class="nx">y</span> <span class="o">=</span> <span class="nx">oPlayer</span><span class="p">.</span><span class="nx">y</span><span class="p">;</span>  <span class="c1">// na isti višini</span>
+
+<span class="c1">// sledi kazalcu miške</span>
+<span class="nx">image_angle</span> <span class="o">=</span> <span class="nx">point_direction</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">,</span><span class="nx">mouse_x</span><span class="p">,</span><span class="nx">mouse_y</span><span class="p">);</span>
+</pre></div>
+<h2>./oEyeRight/Create_0.gml</h2>
+<div class="highlight"><pre><span></span><span class="nx">firingdelay</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</pre></div>
+<h2>./oEyeRight/Draw_0.gml</h2>
+<div class="highlight"><pre><span></span><span class="nx">draw_self</span><span class="p">();</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nx">oPlayer</span><span class="p">.</span><span class="nx">pflash</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">shader_set</span><span class="p">(</span><span class="nx">shWhite</span><span class="p">);</span>
+	<span class="nx">draw_self</span><span class="p">();</span>
+	<span class="nx">shader_reset</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+<h2>./oEyeRight/Step_0.gml</h2>
+<div class="highlight"><pre><span></span><span class="c1">//Shoots a Laser Every 11 Frames</span>
+<span class="nx">firingdelay</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">mouse_check_button</span><span class="p">(</span><span class="nx">mb_left</span><span class="p">))</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">firingdelay</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">firingdelay</span> <span class="o">=</span> <span class="mi">11</span><span class="p">;</span>
+	<span class="kd">with</span> <span class="p">(</span><span class="nx">instance_create_layer</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">,</span><span class="s2">&quot;Lasers&quot;</span><span class="p">,</span><span class="nx">oLaser</span><span class="p">))</span> <span class="p">{</span>
+		<span class="nx">speed</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+		<span class="nx">direction</span> <span class="o">=</span> <span class="nx">other</span><span class="p">.</span><span class="nx">image_angle</span> <span class="o">+</span> <span class="nx">random_range</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
+		<span class="nx">image_angle</span> <span class="o">=</span> <span class="nx">direction</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>	
+
+<span class="c1">//Makes sure Eyes don&#39;t turn upside-down</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">image_angle</span> <span class="o">&gt;</span> <span class="mi">90</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">image_angle</span> <span class="o">&lt;</span> <span class="mi">270</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">image_yscale</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">else</span> <span class="p">{</span>
+	<span class="nx">image_yscale</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<h2>./oEyeRight/Step_2.gml</h2>
+<div class="highlight"><pre><span></span><span class="c1">//Placement Relative to Player</span>
+<span class="nx">x</span> <span class="o">=</span> <span class="nx">oPlayer</span><span class="p">.</span><span class="nx">x</span> <span class="o">+</span> <span class="mi">21</span><span class="p">;</span>
+<span class="nx">y</span> <span class="o">=</span> <span class="nx">oPlayer</span><span class="p">.</span><span class="nx">y</span><span class="p">;</span>
+
+<span class="c1">//Follows Cursor</span>
+<span class="nx">image_angle</span> <span class="o">=</span> <span class="nx">point_direction</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">,</span><span class="nx">mouse_x</span><span class="p">,</span><span class="nx">mouse_y</span><span class="p">);</span>
+</pre></div>
+<h2>./oFlag/Collision_6aaf4652-920a-4477-9e33-070c8f903434.gml</h2>
+<div class="highlight"><pre><span></span><span class="nx">winner</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</pre></div>
+<h2>./oFlag/Create_0.gml</h2>
+<div class="highlight"><pre><span></span><span class="c1">/// @description Insert description here</span>
+<span class="c1">// You can write your code in this editor</span>
+<span class="nx">winner</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</pre></div>
+<h2>./oGameOver/Draw_64.gml</h2>
+<div class="highlight"><pre><span></span><span class="nx">draw_set_color</span><span class="p">(</span><span class="nx">c_white</span><span class="p">);</span>
+<span class="nx">draw_set_font</span><span class="p">(</span><span class="nx">ComicSans</span><span class="p">);</span>
+
+<span class="k">if</span> <span class="p">((</span><span class="nx">instance_exists</span><span class="p">(</span><span class="nx">oPlayerCorpse</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="nx">oPlayer</span><span class="p">.</span><span class="nx">outofbounds</span><span class="o">==</span><span class="mi">1</span><span class="p">))</span> <span class="o">&amp;&amp;</span> <span class="nx">oFlag</span><span class="p">.</span><span class="nx">winner</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">draw_text_transformed</span><span class="p">(</span><span class="mi">800</span><span class="p">,</span> <span class="mi">550</span><span class="p">,</span> <span class="s2">&quot;SCORE: &quot;</span> <span class="o">+</span> <span class="nx">string</span><span class="p">(</span><span class="nx">global</span><span class="p">.</span><span class="nx">kills</span><span class="p">),</span> <span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+	<span class="nx">draw_text_transformed</span><span class="p">(</span><span class="mi">800</span><span class="p">,</span> <span class="mi">850</span><span class="p">,</span> <span class="s2">&quot;Press [R] to restart!&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+	<span class="nx">draw_set_color</span><span class="p">(</span><span class="nx">c_red</span><span class="p">);</span>
+	<span class="nx">draw_text_transformed</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="s2">&quot;YOU DIED :&#39;c&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>	
+
+<span class="k">if</span> <span class="p">(</span><span class="nx">oFlag</span><span class="p">.</span><span class="nx">winner</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">draw_text_transformed</span><span class="p">(</span><span class="mi">800</span><span class="p">,</span> <span class="mi">550</span><span class="p">,</span> <span class="s2">&quot;SCORE: &quot;</span> <span class="o">+</span> <span class="nx">string</span><span class="p">(</span><span class="nx">global</span><span class="p">.</span><span class="nx">kills</span><span class="p">),</span> <span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+	<span class="nx">draw_text_transformed</span><span class="p">(</span><span class="mi">800</span><span class="p">,</span> <span class="mi">850</span><span class="p">,</span> <span class="s2">&quot;Press [R] to restart!&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+	<span class="nx">draw_set_color</span><span class="p">(</span><span class="nx">c_lime</span><span class="p">);</span>
+	<span class="nx">draw_text_transformed</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="s2">&quot;YOU WON \\(^w^)/&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>	
+</pre></div>
+<h2>./oHPCount/Create_0.gml</h2>
+<div class="highlight"><pre><span></span><span class="c1">/// DOGODEK Create</span>
+<span class="nx">image_speed</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>  <span class="c1">// ne animira</span>
+<span class="nx">image_index</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>  <span class="c1">// začne na 4. sliki</span>
+
+<span class="nx">follow</span> <span class="o">=</span> <span class="nx">oCamera</span><span class="p">;</span>  <span class="c1">// sledi kameri</span>
+
+<span class="nx">xTo</span> <span class="o">=</span> <span class="nx">xstart</span><span class="p">;</span>  <span class="c1">// pozicija ob nastanku</span>
+<span class="nx">yTo</span> <span class="o">=</span> <span class="nx">ystart</span><span class="p">;</span>  <span class="c1">// pozicija ob nastanku</span>
+</pre></div>
+<h2>./oHPCount/Step_0.gml</h2>
+<div class="highlight"><pre><span></span><span class="c1">/// DOGODEK Step</span>
+<span class="nx">image_index</span> <span class="o">=</span> <span class="nx">global</span><span class="p">.</span><span class="nx">hp</span><span class="p">;</span>  <span class="c1">// indeks slike = št. življenj</span>
+
+<span class="nx">xTo</span> <span class="o">=</span> <span class="nx">follow</span><span class="p">.</span><span class="nx">x</span><span class="p">;</span>  <span class="c1">// nastavi x na x kamere</span>
+<span class="nx">yTo</span> <span class="o">=</span> <span class="nx">follow</span><span class="p">.</span><span class="nx">y</span><span class="p">;</span>  <span class="c1">// nastavi y na y kamere</span>
+
+<span class="nx">x</span> <span class="o">+=</span> <span class="p">(</span><span class="nx">xTo</span> <span class="o">-</span> <span class="nx">x</span><span class="p">)</span> <span class="o">-</span> <span class="mi">948</span><span class="p">;</span>  <span class="c1">// postavi na desni rob kamere</span>
+<span class="nx">y</span> <span class="o">+=</span> <span class="p">(</span><span class="nx">yTo</span> <span class="o">-</span> <span class="nx">y</span><span class="p">)</span> <span class="o">-</span> <span class="mi">528</span><span class="p">;</span>  <span class="c1">// postavi na zgornji rob kamere</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nx">instance_exists</span><span class="p">(</span><span class="nx">follow</span><span class="p">))</span> <span class="p">{}</span>
+</pre></div>
+<h2>./oKillCount/Create_0.gml</h2>
+<div class="highlight"><pre><span></span><span class="nx">global</span><span class="p">.</span><span class="nx">kills</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</pre></div>
+<h2>./oKillCount/Draw_64.gml</h2>
+<div class="highlight"><pre><span></span><span class="c1">/// IZPIŠE TOČKE</span>
+<span class="k">if</span> <span class="nx">instance_exists</span><span class="p">(</span><span class="nx">oPlayer</span><span class="p">)</span>  <span class="c1">// if (igralec obstaja)</span>
+	<span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">global</span><span class="p">.</span><span class="nx">kills</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// IN (je vsaj en nasprotnik mrtev)</span>
+	<span class="nx">draw_set_color</span><span class="p">(</span><span class="nx">c_white</span><span class="p">);</span>  <span class="c1">// uporabi belo barvo</span>
+	<span class="nx">draw_set_font</span><span class="p">(</span><span class="nx">ComicSans</span><span class="p">);</span>  <span class="c1">// določi pisavo</span>
+	<span class="nx">draw_text_transformed</span>  <span class="c1">// izpiše v zgornjem desnem kotu ...</span>
+		<span class="p">(</span><span class="mi">1480</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="nx">string</span><span class="p">(</span><span class="nx">global</span><span class="p">.</span><span class="nx">kills</span><span class="p">)</span>  <span class="c1">// ... število mrtvih nasprotnikov ...</span>
+		<span class="o">+</span> <span class="s2">&quot; Pointless Murders &gt;:3c&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>  <span class="c1">// ... in tekst</span>
+<span class="p">}</span>	
+</pre></div>
+<h2>./oLaser/Collision_36de0a7c-7208-44d8-b6fe-38128b6231b6.gml</h2>
+<div class="highlight"><pre><span></span><span class="c1">/// TRK Z NASPROTNIKOM oEnemy</span>
+<span class="kd">with</span> <span class="p">(</span><span class="nx">other</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// obratuje z oEnemy</span>
+	<span class="nx">hp</span><span class="o">--</span><span class="p">;</span>  <span class="c1">// zmanjša hp za 1</span>
+	<span class="nx">hitfrom</span> <span class="o">=</span> <span class="nx">other</span><span class="p">.</span><span class="nx">direction</span><span class="p">;</span>  <span class="c1">// hitfrom je enak smeri ...</span>
+<span class="p">}</span>  <span class="c1">// ... od oEnemy do oLaser</span>
+
+<span class="nx">instance_destroy</span><span class="p">();</span>
+
+	<span class="nx">flash</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+</pre></div>
+<h2>./oLaser/Draw_77.gml</h2>
+<div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nx">place_meeting</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">,</span><span class="nx">oWall</span><span class="p">))</span> <span class="nx">instance_destroy</span><span class="p">();</span>
+</pre></div>
+<h2>./oLaser/Other_7.gml</h2>
+<div class="highlight"><pre><span></span><span class="nx">image_speed</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>  <span class="c1">// konča animacijo</span>
+<span class="nx">image_index</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>  <span class="c1">// nastavi drugo sliko</span>
+</pre></div>
+<h2>./oPlayer/Collision_021aa449-8bd2-4b1f-928a-f154907cd7a9.gml</h2>
+<div class="highlight"><pre><span></span><span class="c1">/// TRK Z oEnemy</span>
+<span class="nx">damagedelay</span><span class="o">--</span><span class="p">;</span>  <span class="c1">// zniža časovnik za 1</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">damagedelay</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// if (časovnik je manj kot 0)</span>
+	<span class="nx">damagedelay</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>  <span class="c1">// nastavi časovnik na 30</span>
+	<span class="nx">global</span><span class="p">.</span><span class="nx">hp</span><span class="o">--</span><span class="p">;</span>  <span class="c1">// zmanjša število življenj za 1</span>
+<span class="p">}</span>	
+
+	<span class="nx">pflash</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="c1">///Smrt</span>
+
+<span class="c1">// if (ŠTEVILO ŽIVLJENJ &lt;= 0)</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">global</span><span class="p">.</span><span class="nx">hp</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+	<span class="kd">with</span> <span class="p">(</span><span class="nx">oEyeLeft</span><span class="p">)</span> <span class="nx">instance_destroy</span><span class="p">();</span>  <span class="c1">// uniči oEyeLeft</span>
+	<span class="kd">with</span> <span class="p">(</span><span class="nx">oEyeRight</span><span class="p">)</span> <span class="nx">instance_destroy</span><span class="p">();</span>  <span class="c1">// uniči oEyeRight</span>
+	
+	<span class="nx">instance_change</span><span class="p">(</span><span class="nx">oPlayerCorpse</span><span class="p">,</span><span class="kc">true</span><span class="p">);</span>  <span class="c1">// spremeni oPlayer v oPlayerCorpse, </span>
+														<span class="c1">// ohrani ID primera</span>
+	
+	<span class="nx">direction</span> <span class="o">=</span> <span class="nx">point_direction</span><span class="p">(</span><span class="nx">other</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span><span class="nx">other</span><span class="p">.</span><span class="nx">y</span><span class="p">,</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">);</span>  <span class="c1">// zazna smer, ki kaže do sredine oEnemy, </span>
+														<span class="c1">// s katerim je trčil</span>
+	
+	<span class="nx">hsp</span> <span class="o">=</span> <span class="nx">lengthdir_x</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="nx">direction</span><span class="p">);</span>  <span class="c1">// premakne za 6px stran od oEnemy po x osi</span>
+	<span class="nx">vsp</span> <span class="o">=</span> <span class="nx">lengthdir_y</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="nx">direction</span><span class="p">)</span> <span class="o">-</span><span class="mi">2</span><span class="p">;</span>  <span class="c1">// premakne za 4px stran od oEnemy in 2px navzgor po y osi</span>
+	
+	<span class="nx">image_xscale</span> <span class="o">=</span> <span class="nx">sign</span><span class="p">(</span><span class="nx">hsp</span><span class="p">);</span>  <span class="c1">//spremeni SMER SLIKE, da bo enaka SMERI PREMIKANJA PO X OSI</span>
+<span class="p">}</span>	
+</pre></div>
+<h2>./oPlayer/Create_0.gml</h2>
+<div class="highlight"><pre><span></span><span class="nx">hsp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>  <span class="c1">// vodoravna hitrost</span>
+<span class="nx">vsp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>  <span class="c1">// navpična hitrost</span>
+<span class="nx">grv</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span>  <span class="c1">// gravitacija</span>
+<span class="nx">walksp</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>  <span class="c1">// hitrost teka</span>
+
+<span class="nx">damagedelay</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="c1">// časovnik</span>
+
+<span class="nx">global</span><span class="p">.</span><span class="nx">hp</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>  <span class="c1">// število življenj</span>
+
+<span class="nx">outofbounds</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="c1">// zunaj območja igre</span>
+
+<span class="nx">pflash</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>  <span class="c1">// </span>
+</pre></div>
+<h2>./oPlayer/Draw_0.gml</h2>
+<div class="highlight"><pre><span></span><span class="nx">draw_self</span><span class="p">();</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nx">pflash</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">pflash</span><span class="o">--</span><span class="p">;</span>
+	<span class="nx">shader_set</span><span class="p">(</span><span class="nx">shWhite</span><span class="p">);</span>
+	<span class="nx">draw_self</span><span class="p">();</span>
+	<span class="nx">shader_reset</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+<h2>./oPlayer/Other_0.gml</h2>
+<div class="highlight"><pre><span></span><span class="nx">outofbounds</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</pre></div>
+<h2>./oPlayer/Step_0.gml</h2>
+<div class="highlight"><pre><span></span><span class="c1">/// BERE VHODNE PODATKE</span>
+
+<span class="nx">key_left</span> <span class="o">=</span>	<span class="nx">keyboard_check</span><span class="p">(</span><span class="nx">vk_left</span><span class="p">)</span>  <span class="c1">// leva tipka</span>
+			<span class="nx">or</span> <span class="nx">keyboard_check</span><span class="p">(</span><span class="nx">ord</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">));</span>  <span class="c1">// tipka A</span>
+			
+<span class="nx">key_right</span> <span class="o">=</span> <span class="nx">keyboard_check</span><span class="p">(</span><span class="nx">vk_right</span><span class="p">)</span>  <span class="c1">// desna tipka</span>
+			<span class="nx">or</span> <span class="nx">keyboard_check</span><span class="p">(</span><span class="nx">ord</span><span class="p">(</span><span class="s2">&quot;D&quot;</span><span class="p">));</span>  <span class="c1">// tipka D</span>
+			
+<span class="nx">key_jump</span> <span class="o">=</span> <span class="nx">keyboard_check</span><span class="p">(</span><span class="nx">vk_space</span><span class="p">)</span>  <span class="c1">// tipka za presledek</span>
+			<span class="nx">or</span> <span class="nx">keyboard_check</span><span class="p">(</span><span class="nx">vk_up</span><span class="p">)</span>  <span class="c1">// tipka navzgor</span>
+			<span class="nx">or</span> <span class="nx">keyboard_check</span><span class="p">(</span><span class="nx">ord</span><span class="p">(</span><span class="s2">&quot;W&quot;</span><span class="p">));</span>  <span class="c1">// tipka W</span>
+
+<span class="c1">/// RAČUNA HITROST</span>
+<span class="kd">var</span> <span class="nx">move</span> <span class="o">=</span> <span class="nx">key_right</span> <span class="o">-</span> <span class="nx">key_left</span><span class="p">;</span>  <span class="c1">// določi smer gibanja</span>
+
+<span class="nx">hsp</span> <span class="o">=</span> <span class="nx">move</span> <span class="o">*</span> <span class="nx">walksp</span><span class="p">;</span>  <span class="c1">// vodoravna hitrost v smeri gibanja</span>
+<span class="nx">vsp</span> <span class="o">+=</span> <span class="nx">grv</span><span class="p">;</span>  <span class="c1">// navpični hitrosi doda gravitacijo</span>
+
+<span class="c1">/// SKOK</span>
+<span class="k">if</span>  <span class="p">(</span><span class="nx">key_jump</span><span class="p">)</span>  <span class="c1">// if (tipka za skok)</span>
+	<span class="o">&amp;&amp;</span> <span class="p">(</span>	<span class="p">(</span><span class="nx">place_meeting</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="nx">oWall</span><span class="p">)</span>  <span class="c1">// and (	((1px pod mano je zid)</span>
+			<span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">place_meeting</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">,</span><span class="nx">oWall</span><span class="p">)</span>	<span class="p">)</span>  <span class="c1">//			and (nisem znotraj zida))</span>
+		<span class="nx">or</span> <span class="nx">place_meeting</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="nx">oEnemyCorpse</span><span class="p">)</span>	<span class="p">)</span> <span class="p">{</span>  <span class="c1">//		or (1px pod mano je truplo)</span>
+	<span class="nx">vsp</span> <span class="o">=</span> <span class="o">-</span><span class="mi">14</span><span class="p">;</span>  <span class="c1">// poveča navpično hitrost oz. skoči</span>
+<span class="p">}</span>	
+
+<span class="c1">/// VODORAVNI TRK</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">place_meeting</span><span class="p">(</span><span class="nx">x</span><span class="o">+</span><span class="nx">hsp</span><span class="p">,</span><span class="nx">y</span><span class="p">,</span><span class="nx">oWall</span><span class="p">))</span> <span class="p">{</span>  <span class="c1">// if (čez 1 tik bo v zidu)</span>
+	<span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="nx">place_meeting</span><span class="p">(</span><span class="nx">x</span><span class="o">+</span><span class="nx">sign</span><span class="p">(</span><span class="nx">hsp</span><span class="p">),</span><span class="nx">y</span><span class="p">,</span><span class="nx">oWall</span><span class="p">))</span> <span class="p">{</span>  <span class="c1">// dokler je vsaj 1px od zida v smeri gibanja po x osi</span>
+		<span class="nx">x</span> <span class="o">+=</span> <span class="nx">sign</span><span class="p">(</span><span class="nx">hsp</span><span class="p">);</span>  <span class="c1">// se premika 1px v smeri gibanja po x osi</span>
+	<span class="p">}</span>
+	<span class="nx">hsp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>  <span class="c1">// se ustavi (po x osi)</span>
+<span class="p">}</span>
+
+<span class="c1">/// PREMIK PO VODORAVNI OSI</span>
+<span class="nx">x</span> <span class="o">+=</span> <span class="nx">hsp</span><span class="p">;</span>  <span class="c1">// x koordinati prišteje vodoravno hitrost</span>
+
+<span class="c1">/// NAVPIČNI TRK</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">sign</span><span class="p">(</span><span class="nx">vsp</span><span class="p">))</span> <span class="p">{</span>  <span class="c1">// if (se premika navzdol)</span>
+	<span class="k">if</span>	<span class="p">(</span>	<span class="nx">place_meeting</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="o">+</span><span class="nx">vsp</span><span class="p">,</span><span class="nx">oWall</span><span class="p">)</span>  <span class="c1">// if (	(čez 1 tik bo v zidu)</span>
+			<span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">place_meeting</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="p">,</span><span class="nx">oWall</span><span class="p">))</span>  <span class="c1">//		and (trenutno ni v zidu))</span>
+		<span class="nx">or</span> <span class="nx">place_meeting</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="o">+</span><span class="nx">vsp</span><span class="p">,</span><span class="nx">oEnemyCorpse</span><span class="p">){</span>  <span class="c1">//	  or (čez 1 tik bo v truplu)</span>
+			
+		<span class="k">while</span> <span class="o">!</span><span class="p">(</span><span class="nx">place_meeting</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="o">+</span><span class="nx">sign</span><span class="p">(</span><span class="nx">vsp</span><span class="p">),</span><span class="nx">oWall</span><span class="p">)</span>  <span class="c1">// dokler je vsaj 1px od zida ...</span>
+				<span class="nx">or</span> <span class="nx">place_meeting</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="o">+</span><span class="nx">sign</span><span class="p">(</span><span class="nx">vsp</span><span class="p">),</span><span class="nx">oEnemyCorpse</span><span class="p">))</span> <span class="p">{</span>  <span class="c1">// ... ali trupla v smeri gibanja po y osi</span>
+			<span class="nx">y</span> <span class="o">+=</span> <span class="nx">sign</span><span class="p">(</span><span class="nx">vsp</span><span class="p">);</span>  <span class="c1">// se premika 1px v smeri gibanja po y osi</span>
+		<span class="p">}</span>
+		<span class="nx">vsp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>  <span class="c1">// se ustavi (po y osi)</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">/// PREMIK PO NAVPIČNI OSI</span>
+<span class="nx">y</span> <span class="o">+=</span> <span class="nx">vsp</span><span class="p">;</span>  <span class="c1">// y koordinati prišteje navpično hitrost</span>
+
+
+<span class="c1">/// Animacija</span>
+
+<span class="c1">// if	(NI	(na tleh)			or			(na nasprotnikovem truplu))</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="nx">place_meeting</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="nx">oWall</span><span class="p">)</span> <span class="nx">or</span> <span class="nx">place_meeting</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="nx">oEnemyCorpse</span><span class="p">)))</span> <span class="p">{</span> 
+	<span class="nx">sprite_index</span> <span class="o">=</span> <span class="nx">sPlayerA</span><span class="p">;</span>  <span class="c1">// določi sprite V ZRAKU</span>
+	<span class="nx">image_speed</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>  <span class="c1">// NI animirano</span>
+	<span class="k">if</span> <span class="p">(</span><span class="nx">sign</span><span class="p">(</span><span class="nx">vsp</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="nx">image_index</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>  <span class="c1">// if (se premika navzdol) uporabi 2. sliko</span>
+	<span class="k">else</span> <span class="nx">image_index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>  <span class="c1">// else uporabi 1. sliko</span>
+<span class="p">}</span>
+<span class="k">else</span> <span class="p">{</span>  <span class="c1">// if JE na tleh</span>
+	<span class="nx">image_speed</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>  <span class="c1">// JE animirano</span>
+	<span class="k">if</span> <span class="p">(</span><span class="nx">hsp</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="nx">sprite_index</span> <span class="o">=</span> <span class="nx">sPlayer</span><span class="p">;</span>  <span class="c1">// if (stoji pri miru) določi sprite STOJEČE</span>
+	<span class="k">else</span> <span class="nx">sprite_index</span> <span class="o">=</span> <span class="nx">sPlayerR</span><span class="p">;</span>  <span class="c1">// else določi sprite V TEKU</span>
+<span class="p">}</span>	
+
+<span class="k">if</span> <span class="p">(</span><span class="nx">hsp</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="nx">image_xscale</span> <span class="o">=</span> <span class="nx">sign</span><span class="p">(</span><span class="nx">hsp</span><span class="p">);</span>  <span class="c1">// ko se premika, spremeni SMER SLIKE</span>
+<span class="c1">// da bo enaka SMERI PREMIKANJA PO X OSI</span>
+</pre></div>
+<h2>./oPlayerCorpse/Create_0.gml</h2>
+<div class="highlight"><pre><span></span><span class="nx">hsp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="nx">vsp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="nx">grv</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span>
+<span class="nx">done</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="nx">image_speed</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="nx">image_index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</pre></div>
+<h2>./oPlayerCorpse/Step_0.gml</h2>
+<div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nx">done</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+<span class="c1">//Calculate Movement</span>
+	<span class="nx">vsp</span> <span class="o">+=</span> <span class="nx">grv</span><span class="p">;</span>
+
+	<span class="c1">//Horizontal Collision</span>
+	<span class="k">if</span> <span class="p">(</span><span class="nx">place_meeting</span><span class="p">(</span><span class="nx">x</span><span class="o">+</span><span class="nx">hsp</span><span class="p">,</span><span class="nx">y</span><span class="p">,</span><span class="nx">oWall</span><span class="p">))</span> <span class="p">{</span>
+		<span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="nx">place_meeting</span><span class="p">(</span><span class="nx">x</span><span class="o">+</span><span class="nx">sign</span><span class="p">(</span><span class="nx">hsp</span><span class="p">),</span><span class="nx">y</span><span class="p">,</span><span class="nx">oWall</span><span class="p">))</span> <span class="p">{</span>
+			<span class="nx">x</span> <span class="o">+=</span> <span class="nx">sign</span><span class="p">(</span><span class="nx">hsp</span><span class="p">);</span>
+		<span class="p">}</span>
+		<span class="nx">hsp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="nx">x</span> <span class="o">+=</span> <span class="nx">hsp</span><span class="p">;</span>
+
+	<span class="c1">//Vertical Collision</span>
+	<span class="k">if</span> <span class="p">(</span><span class="nx">place_meeting</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="o">+</span><span class="nx">vsp</span><span class="p">,</span><span class="nx">oWall</span><span class="p">))</span> <span class="p">{</span>
+		<span class="k">if</span> <span class="p">(</span><span class="nx">vsp</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+			<span class="nx">done</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+			<span class="nx">image_index</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+		<span class="p">}</span>
+		<span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="nx">place_meeting</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="nx">y</span><span class="o">+</span><span class="nx">sign</span><span class="p">(</span><span class="nx">vsp</span><span class="p">),</span><span class="nx">oWall</span><span class="p">))</span> <span class="p">{</span>
+			<span class="nx">y</span> <span class="o">+=</span> <span class="nx">sign</span><span class="p">(</span><span class="nx">vsp</span><span class="p">);</span>
+		<span class="p">}</span>
+		<span class="nx">vsp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="nx">y</span> <span class="o">+=</span> <span class="nx">vsp</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div></body>
